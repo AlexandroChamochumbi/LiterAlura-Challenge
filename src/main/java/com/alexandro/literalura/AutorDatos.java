@@ -1,12 +1,20 @@
 package com.alexandro.literalura;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AutorDatos {
+public record AutorDatos(
 
-    private String name;
+        @JsonAlias("name")
+        String name,
 
-    public String getName() {
-        return name;
-    }
-}
+        @JsonAlias("birth_year")
+        Integer birthYear,
+
+        @JsonAlias("death_year")
+        Integer deathYear
+
+) {}

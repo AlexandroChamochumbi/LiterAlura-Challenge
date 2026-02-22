@@ -1,42 +1,50 @@
 package com.alexandro.literalura.modelo;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+@Entity
 public class Libro {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String titulo;
-    private List<Autor> autores;
-    private List<String> idiomas;
+    private String idioma;
     private Integer numeroDescargas;
 
-    public Libro(String titulo, List<Autor> autores, List<String> idiomas, Integer numeroDescargas) {
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private Autor autor;
+
+    public Libro() {}
+
+    public Libro(String titulo, String idioma, Integer numeroDescargas, Autor autor) {
         this.titulo = titulo;
-        this.autores = autores;
-        this.idiomas = idiomas;
+        this.idioma = idioma;
         this.numeroDescargas = numeroDescargas;
+        this.autor = autor;
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
+    public String getTitulo() { return titulo; }
+    public String getIdioma() { return idioma; }
+    public Integer getNumeroDescargas() { return numeroDescargas; }
+    public Autor getAutor() { return autor; }
 
-    public List<Autor> getAutores() {
-        return autores;
-    }
-    public List<String> getIdiomas() {
-            return idiomas;
-        }
-    public Integer getNumeroDescargas() {
-        return numeroDescargas;
-    }
     @Override
     public String toString() {
         return """
-                ----- LIBRO -----
-                Título: %s
-                Autores: %s
-                Idiomas: %s
+                -------------------------
+                Libro: %s
+                Autor: %s
+                Idioma: %s
                 Descargas: %d
-                """.formatted(titulo, autores, idiomas, numeroDescargas);
+                -------------------------
+                """.formatted(
+                titulo,
+                autor.getNombre(),
+                idioma,
+                numeroDescargas
+        );
     }
 }

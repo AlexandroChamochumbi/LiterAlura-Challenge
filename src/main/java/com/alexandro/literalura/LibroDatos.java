@@ -1,31 +1,23 @@
 package com.alexandro.literalura;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LibroDatos {
+public record LibroDatos(
 
-    private String title;
-    private List<AutorDatos> authors;
-    private List<String> languages;
+        @JsonAlias("title")
+        String title,
 
-    @JsonProperty("download_count")
-    private Integer downloadCount;
+        @JsonAlias("languages")
+        List<String> languages,
 
-    public String getTitle() {
-        return title;
-    }
+        @JsonAlias("download_count")
+        Integer downloadCount,
 
-    public List<AutorDatos> getAuthors() {
-        return authors;
-    }
+        @JsonAlias("authors")
+        List<AutorDatos> authors
 
-    public List<String> getLanguages() {
-        return languages;
-    }
-
-    public Integer getDownloadCount() {
-        return downloadCount;
-    }
-}
+) {}
